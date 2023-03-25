@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detect Vehicles</title>
+</head>
+<body>
+<h1>Upload Your Parking Image Here</h1>
+<p>Check what kind of vehicles are parked here using the power of YOLO!</p>
+<input type="file" onchange="encodeImageFileAsURL(this)"/>
+<div>
+	<img id="displayImg" />
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="application/javascript">
+		function encodeImageFileAsURL(element) {
+	let file = element.files[0];
+	let reader = new FileReader();
+	reader.onloadend = function() {
+		// Encode the image as a base64 string
+	    const base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
+		imageBase64Stringsep = base64String;
+		// console.log(imageBase64Stringsep);
+  		// Get the file name
+  		const filename = file.name;
+  		// Get the file extension
+  		const fileExtension = filename.split(".").pop();
+  		console.log(fileExtension);
+
+		// Send the base64 string to the REST API endpoint
+    	const endpoint = "http://localhost:5000/upload";
+    	const payload = {
+      		data: imageBase64Stringsep,
+      		ext: fileExtension
+    	};
+
+	    $.ajax({
+		  url: endpoint,
+		  method: "POST",
+		  data: JSON.stringify(payload),
+		  contentType: "application/json",
+		  success: function(response) {
+		    console.log("POST request succeeded:", response);
+        	var decodedString = 'data:image/' + response.ext + ';base64,' + response.data;
+			$('#displayImg').attr('src', decodedString);
+        	$('body').append(img);
+		  },
+		  error: function(xhr, status, error) {
+		    console.error("POST request failed:", error);
+		  }
+		});
+
+
+	}
+	reader.readAsDataURL(file);
+}
+
+</script>
+</body>
+</html>
