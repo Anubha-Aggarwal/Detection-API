@@ -2,14 +2,32 @@
 <html>
 <head>
     <title>Detect Vehicles</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style type="text/css">
+    	input::file-selector-button {
+		    font-weight: bold;
+		    background-color: #2E008B !important;
+		    color: white !important;
+		}
+    </style>
 </head>
 <body>
-<h1>Upload Your Parking Image Here</h1>
-<p>Check what kind of vehicles are parked here using the power of YOLO!</p>
-<input type="file" onchange="encodeImageFileAsURL(this)"/>
-<div>
-	<img id="displayImg" />
-</div>
+	<!-- As a heading -->
+	<nav class="navbar navbar-dark" style="background-color: #13294B;">
+	  <div class="container-fluid">
+	    <span class="navbar-brand mb-0 h1">Upload Your Parking Image Here</span>
+	  </div>
+	</nav>
+	<main class="p-4">
+		<!--<h1>Upload Your Parking Image Here</h1> -->
+		<p>Check what kind of vehicles are parked here using the power of YOLO!</p>
+		<div class="text-center">
+			<input class="form-control w-50" type="file" accept="image/*" onchange="encodeImageFileAsURL(this)"/>
+		</div>
+		<div class="mt-4 rounded d-flex h-50 w-75">
+			<img class="mt-4 rounded mh-100 mw-100" id="displayImg" style="object-fit: contain;"/>
+		</div>
+	</main>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="application/javascript">
 		function encodeImageFileAsURL(element) {
